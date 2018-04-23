@@ -1,14 +1,6 @@
 # Specify the provider and access details
 
-# We use vault to get credentials, but you can use variables to achieve the same thing
-data "vault_generic_secret" "aws_creds" {
-  path = "aws/sts/manage-${var.aws_account_id}"
-}
-
 provider "aws" {
-  access_key = "${data.vault_generic_secret.aws_creds.data["access_key"]}"
-  secret_key = "${data.vault_generic_secret.aws_creds.data["secret_key"]}"
-  token      = "${data.vault_generic_secret.aws_creds.data["security_token"]}"
   region     = "${var.aws_region}"
 }
 
