@@ -14,7 +14,7 @@ resource "aws_ecs_cluster" "main" {
 resource "aws_cloudwatch_log_group" "container" {
   count = "${var.enabled ? 1: 0}"
   name  = "/ecs/${var.prefix}-container"
-
+  retention_in_days = "${var.logwatch_retention}"
   tags {
     Application = "${var.prefix}"
   }

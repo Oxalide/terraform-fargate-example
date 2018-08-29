@@ -58,3 +58,7 @@ variable "container_env" {
 variable "health_grace_period" {
   default     = "120"
 }
+
+variable "logwatch_retention" {
+  default     = 30
+}
