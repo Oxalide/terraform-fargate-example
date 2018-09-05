@@ -1,3 +1,8 @@
+variable "enabled" {
+  default     = "true"
+  description = "Enable module creation"
+}
+
 variable "aws_region" {
   description = "The AWS region to create things in."
   default     = "us-east-1"
@@ -7,9 +12,14 @@ variable "aws_account_id" {
   description = "AWS account ID"
 }
 
-variable "az_count" {
-  description = "Number of AZs to cover in a given AWS region"
-  default     = "2"
+variable "aws_security_group_id" {
+}
+
+variable "aws_subnet_ids" {
+  type = "list"
+}
+
+variable "aws_alb_target_group_id" {
 }
 
 variable "app_image" {
@@ -36,3 +46,30 @@ variable "fargate_memory" {
   description = "Fargate instance memory to provision (in MiB)"
   default     = "512"
 }
+
+variable "prefix" {
+  default     = "app-dev"
+}
+
+variable "container_env" {
+  default     = "[]"
+}
+
+variable "health_grace_period" {
+  default     = "120"
+}
+
+variable "logwatch_retention" {
+  default     = 30
+}
+
+variable "execution_role" {
+  default     = ""
+  description = "Fixed name execution role for container task to assume, see execution_role_arn in ecs_task_definition"
+}
+
+variable "task_role" {
+  default     = ""
+  description = "Optional name of task role for container task to make AWS calls"
+}
+
