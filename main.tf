@@ -28,7 +28,7 @@ resource "aws_ecs_task_definition" "app" {
   cpu                      = "${var.fargate_cpu}"
   memory                   = "${var.fargate_memory}"
   task_role_arn            = "${var.task_role}"
-  execution_role_arn       = "${length(var.execution_role) != 0 ? var.execution_role : aws_iam_role.ecs_tasks_execution_role.arn}"
+  execution_role_arn       = "${length(var.execution_role) != 0 ? var.execution_role : join("", aws_iam_role.ecs_tasks_execution_role.*.arn)}"
 
   container_definitions = <<DEFINITION
 [

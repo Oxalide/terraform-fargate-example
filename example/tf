@@ -1,0 +1,4 @@
+#!/bin/bash
+# Example running
+# 
+TF_VAR_aws_subnet_ids=subnet-e2248884 TF_VAR_aws_security_group_id=sg-18e63d65 terraform $*

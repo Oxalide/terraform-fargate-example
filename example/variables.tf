@@ -7,7 +7,9 @@ variable "aws_region" {
 }
 
 variable "aws_subnet_ids" {
+# default = "enter yours"
 }
 
 variable "aws_security_group_id" {
+# default = "enter yours"
 }
