@@ -62,3 +62,8 @@ variable "health_grace_period" {
 variable "logwatch_retention" {
   default     = 30
 }
+
+variable "execution_role" {
+  default     = ""
+  description = "Fixed name execution role for container task"
+}
