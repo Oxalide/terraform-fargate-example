@@ -72,7 +72,7 @@ data "aws_iam_policy_document" "ecs_tasks_execution_role" {
 }
 
 resource "aws_iam_role" "ecs_tasks_execution_role" {
-  count              = "${var.enabled && length(var.execution_role) == 0 ? 1: 0}"
+  count              = "${var.enabled && length(var.execution_role) == 0 ? 1 : 0}"
   name               = "${var.prefix}-ecs-task-execution-role"
   assume_role_policy = "${data.aws_iam_policy_document.ecs_tasks_execution_role.json}"
 }
@@ -83,8 +83,23 @@ resource "aws_iam_role_policy_attachment" "ecs_tasks_execution_role" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-resource "aws_ecs_service" "main" {
-  count           = "${var.enabled ? 1: 0}"
+resource "aws_ecs_service" "service_no_lb" {
+  count           = "${var.enabled && length(var.aws_alb_target_group_id) == 0 ? 1: 0}"
+  name            = "${var.prefix}-ecs"
+  cluster         = "${aws_ecs_cluster.main.id}"
+  task_definition = "${aws_ecs_task_definition.app.arn}"
+  desired_count   = "${var.app_count}"
+  launch_type     = "FARGATE"
+
+  network_configuration {
+    security_groups  = ["${var.aws_security_group_id}"]
+    subnets          = ["${var.aws_subnet_ids}"]
+    assign_public_ip = "${var.assign_public_ip}"
+  }
+}
+
+resource "aws_ecs_service" "service_lb" {
+  count           = "${var.enabled && length(var.aws_alb_target_group_id) != 0 ? 1: 0}"
   name            = "${var.prefix}-ecs"
   cluster         = "${aws_ecs_cluster.main.id}"
   task_definition = "${aws_ecs_task_definition.app.arn}"
@@ -95,7 +110,7 @@ resource "aws_ecs_service" "main" {
   network_configuration {
     security_groups  = ["${var.aws_security_group_id}"]
     subnets          = ["${var.aws_subnet_ids}"]
-    assign_public_ip = true
+    assign_public_ip = "${var.assign_public_ip}"
   }
 
   load_balancer {

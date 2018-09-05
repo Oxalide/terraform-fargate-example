@@ -19,7 +19,12 @@ variable "aws_subnet_ids" {
   type = "list"
 }
 
+variable "assign_public_ip" {
+  default = "true"
+}
+
 variable "aws_alb_target_group_id" {
+  default = ""
 }
 
 variable "app_image" {
