@@ -65,5 +65,11 @@ variable "logwatch_retention" {
 
 variable "execution_role" {
   default     = ""
-  description = "Fixed name execution role for container task"
+  description = "Fixed name execution role for container task to assume, see execution_role_arn in ecs_task_definition"
 }
+
+variable "task_role" {
+  default     = ""
+  description = "Optional name of task role for container task to make AWS calls"
+}
+
