@@ -1,10 +1,11 @@
 variable "aws_region" {
   description = "The AWS region to create things in."
-  default     = "us-east-1"
+  default     = "us-west-2"
 }
 
 variable "aws_account_id" {
   description = "AWS account ID"
+  default = "puppet-forge"
 }
 
 variable "az_count" {
@@ -14,7 +15,7 @@ variable "az_count" {
 
 variable "app_image" {
   description = "Docker image to run in the ECS cluster"
-  default     = "adongy/hostname-docker:latest"
+  default     = "scottyc/web-app:latest"
 }
 
 variable "app_port" {
@@ -34,5 +35,5 @@ variable "fargate_cpu" {
 
 variable "fargate_memory" {
   description = "Fargate instance memory to provision (in MiB)"
-  default     = "512"
+  default     = "256"
 }
