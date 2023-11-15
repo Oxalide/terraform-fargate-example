@@ -6,7 +6,7 @@ variable "aws_region" {
 variable "aws_account_id" {
   description = "AWS account ID"
 }
-
+#test
 variable "az_count" {
   description = "Number of AZs to cover in a given AWS region"
   default     = "2"
